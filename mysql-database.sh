@@ -45,26 +45,23 @@ ROOT_ACCESS
 
 Logfile_Setup
 
-echo "Script $Y Started$N executing at $(date)" | tee -a $Log_file
+echo -e "Script$Y Started$N executing at $(date)" | tee -a $Log_file
 
 dnf list installed mysql-server &>>$Log_file
 VALIDATE $? mysql-server | tee -a $Log_file
 
-dnf install mysql-server -y &>>$Log_file
-VALIDATE $? mysql-server | tee -a $Log_file
-
 systemctl enable mysqld &>>$Log_file
-echo "Systemctl $Y Enable$N mysqld" | tee -a $Log_file
+echo -e "Systemctl$Y Enable$N mysqld$G Successfull$N" | tee -a $Log_file
 
 systemctl restart mysqld &>>$Log_file
-echo "Systemctl $Y Restarted$N mysqld" | tee -a $Log_file
+echo -e "Systemctl$Y Restarted$N mysqld$G Successfull$N" | tee -a $Log_file
 
 
 mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$Log_file
-echo "MySQL Password setup is $G Successfull$N" | tee -a $Log_file
+echo -e "MySQL Password setup is$G Successfull$N" | tee -a $Log_file
 
-dnf install mysql -y &>>$Log_file
+dnf list installed mysql -y &>>$Log_file
 VALIDATE $? mysql
 
 echo "" | tee -a $Log_file
-echo "Script $G Completed$N executing at $(date)" | tee -a $Log_file 
+echo -e "Script$G Completed$N executing at $(date)" | tee -a $Log_file 
