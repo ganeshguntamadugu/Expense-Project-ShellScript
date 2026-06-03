@@ -60,7 +60,7 @@ echo -e "Systemctl$Y Restarted$N mysqld$G Successfull$N" | tee -a $Log_file
 mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$Log_file
 echo -e "MySQL Password setup is$G Successfull$N" | tee -a $Log_file
 
-dnf list installed mysql -y &>>$Log_file
+dnf list installed mysql &>>$Log_file
 VALIDATE $? mysql
 
 echo "" | tee -a $Log_file
