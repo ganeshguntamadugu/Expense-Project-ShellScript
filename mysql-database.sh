@@ -49,7 +49,7 @@ echo -e "Script$Y Started$N executing at $(date)" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 dnf list installed mysql-server &>>$Log_file
-VALIDATE $? mysql-server | tee -a $Log_file
+VALIDATE $? mysql-server 
 
 echo "" | tee -a $Log_file
 systemctl enable mysqld &>>$Log_file
