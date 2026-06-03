@@ -41,6 +41,8 @@ VALIDATE(){
     fi
 }
 
+#The main script runs from here
+
 ROOT_ACCESS
 
 Logfile_Setup
@@ -60,8 +62,14 @@ systemctl restart mysqld &>>$Log_file
 echo -e "Systemctl$Y Restarted$N mysqld$G Successfull$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$Log_file
-echo -e "MySQL Password setup is$G Successfull$N" | tee -a $Log_file
+mysql -h mysql.gangs.shop -u root -pExpenseApp@1 -e "show databases;" &>>$Log_file
+if [ $? -ne 0 ]
+then    
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$Log_file
+    echo -e "MySQL Password setup is$G Successfull$N" | tee -a $Log_file
+else 
+    echo -e "MySQL Password is$Y Already$N setup, nothing to do" | tee -a $Log_file
+fi
 
 echo "" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
