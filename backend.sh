@@ -59,8 +59,15 @@ node -v | tee -a $Log_file
 
 mkdir -p /app
 
-useradd expense
-echo "Created a user 'Expence'" | tee -a $Log_file
+id expense
+if [ $? -ne 0 ]
+then
+    useradd expense
+    echo "Created a user 'Expense'" | tee -a $Log_file
+else
+    echo "User Expense is $Y Already$N Exists"
+fi
+
 
 curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz
 echo "Downloaded the Application" | tee -a $Log_file
@@ -78,7 +85,7 @@ echo "Copied backend configuration" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
 if [ $? -ne 0 ]
 then
-    dnf install mysql -y
+    dnf install mysql -y &>>$Log_file
     echo -e "MySQL installation $G Successfull$N" | tee -a $Log_file
 else
     echo -e "MySQL is $Y Already$N installed" | tee -a $Log_file
@@ -106,3 +113,6 @@ echo -e "Enabled backend $G Successfull$N" | tee -a $Log_file
 echo ""
 systemctl restart backend
 echo -e "Reastarted backend $G Successfull$N" | tee -a $Log_file
+
+echo "" | tee -a $Log_file
+echo -e "Script$G Completed$N executing at $(date)" | tee -a $Log_file 
