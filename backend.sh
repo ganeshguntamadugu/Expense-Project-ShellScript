@@ -29,12 +29,15 @@ VALIDATE(){
     then 
         echo -e "$2 is$R NOT$N installed, going to install" | tee -a $Log_file
 
+        echo "" | tee -a $Log_file
         dnf module disable $2 -y &>>$Log_file
         echo -e "$Y Disabled$N $2" | tee -a $Log_file
 
+        echo "" | tee -a $Log_file
         dnf module enable $2:20 -y &>>$Log_file
         echo -e "$Y Enabled$N $2 version 20" | tee -a $Log_file
 
+        echo "" | tee -a $Log_file
         dnf install $2 -y &>>$Log_file
         echo -e "$2 version 20 installed$G Successful$N" | tee -a $Log_file
         
@@ -55,6 +58,7 @@ echo "" | tee -a $Log_file
 dnf list installed nodejs &>>$Log_file
 VALIDATE $? nodejs
 
+echo "" | tee -a $Log_file
 node -v | tee -a $Log_file
 
 mkdir -p /app
