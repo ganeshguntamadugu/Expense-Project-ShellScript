@@ -59,29 +59,33 @@ node -v | tee -a $Log_file
 
 mkdir -p /app
 
-id expense
+echo "" | tee -a $Log_file
+id expense &>>$Log_file
 if [ $? -ne 0 ]
 then
     useradd expense
-    echo "Created a user 'Expense'" | tee -a $Log_file
+    echo -e "Created a user $G 'Expense'$N" | tee -a $Log_file
 else
-    echo "User Expense is $Y Already$N Exists"
+    echo -e "User Expense is $Y Already$N Exists" | tee -a $Log_file
 fi
 
-
-curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz
+echo "" | tee -a $Log_file
+curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz &>>$Log_file
 echo "Downloaded the Application" | tee -a $Log_file
 
 cd /app
 tar -xzf /tmp/backend.tar.gz 
 
+echo "" | tee -a $Log_file
 cd /app
 npm install &>>$Log_file
-echo "Installed dependencies" | tee -a $Log_file
+echo "Dependencies are $G Installed$N" | tee -a $Log_file
 
+echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/backend-config /etc/systemd/system/backend.service
-echo "Copied backend configuration" | tee -a $Log_file
+echo "Backend configurations are $G Copied$N" | tee -a $Log_file
 
+echo "" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
 if [ $? -ne 0 ]
 then
@@ -91,8 +95,8 @@ else
     echo -e "MySQL is $Y Already$N installed" | tee -a $Log_file
 fi
 
-
-mysql -h mysql.gangs.shop -u root -pExpenseApp@1 < /app/schema/backend.sql
+echo "" | tee -a $Log_file
+mysql -h mysql.gangs.shop -u root -pExpenseApp@1 < /app/schema/backend.sql &>>$Log_file
 if [ $? -ne 0 ]
 then
     echo -e "Schema integration $R Failed$N, Please check the error" | tee -a $Log_file
@@ -102,17 +106,17 @@ else
 fi
 
 
-echo ""
+echo "" | tee -a $Log_file
 systemctl daemon-reload
 echo -e "Daemon reload $G Successfull$N" | tee -a $Log_file
 
-echo ""
+echo "" | tee -a $Log_file
 systemctl enable backend
 echo -e "Enabled backend $G Successfull$N" | tee -a $Log_file
 
-echo ""
+echo "" | tee -a $Log_file
 systemctl restart backend
-echo -e "Reastarted backend $G Successfull$N" | tee -a $Log_file
+echo -e "Restarted backend $G Successfull$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 echo -e "Script$G Completed$N executing at $(date)" | tee -a $Log_file 
