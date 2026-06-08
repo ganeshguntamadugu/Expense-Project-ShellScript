@@ -71,7 +71,7 @@ fi
 
 echo "" | tee -a $Log_file
 curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz &>>$Log_file
-echo "Downloaded the Application" | tee -a $Log_file
+echo -e "Application is $G Downloaded$N" | tee -a $Log_file
 
 cd /app
 tar -xzf /tmp/backend.tar.gz 
@@ -79,11 +79,11 @@ tar -xzf /tmp/backend.tar.gz
 echo "" | tee -a $Log_file
 cd /app
 npm install &>>$Log_file
-echo "Dependencies are $G Installed$N" | tee -a $Log_file
+echo -e "Dependencies are $G Installed$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/backend-config /etc/systemd/system/backend.service
-echo "Backend configurations are $G Copied$N" | tee -a $Log_file
+echo -e "Backend configurations are $G Copied$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
