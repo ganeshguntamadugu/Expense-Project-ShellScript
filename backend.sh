@@ -83,7 +83,7 @@ id expense &>>$Log_file
     if [ $? -ne 0 ]
     then
         useradd expense
-            if [ $? -ne 0 ]
+        if [ $? -ne 0 ]
             echo -e "Creating user Expense is$R Failed$N, Please check the error" | tee -a $Log_file
             exit 1
         else
