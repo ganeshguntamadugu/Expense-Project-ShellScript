@@ -31,13 +31,12 @@ VALIDATE(){
 
         echo "" | tee -a $Log_file
         dnf module disable $2 -y &>>$Log_file
-        echo -e "$Y Disabled$N $2" | tee -a $Log_file
+        echo -e "$2 is$Y Disabled$N" | tee -a $Log_file
 
         echo "" | tee -a $Log_file
         dnf module enable $2:20 -y &>>$Log_file
-        echo -e "$Y Enabled$N $2 version 20" | tee -a $Log_file
+        echo -e "$2 version 20 is $Y Enabled$N" | tee -a $Log_file
 
-        echo "" | tee -a $Log_file
         dnf install $2 -y &>>$Log_file
         if [ $? -ne 0 ]
         then
@@ -46,7 +45,7 @@ VALIDATE(){
             exit 1
         else
             echo "" | tee -a $Log_file
-            echo -e "$2 version 20 installed$G Successful$N" | tee -a $Log_file
+            echo -e "$2 version 20 is installed$G Successful$N" | tee -a $Log_file
         fi
     else
         echo -e "$2 is$Y Already$N installed, nothing to do" | tee -a $Log_file
@@ -122,7 +121,7 @@ systemctl daemon-reload
 echo -e "Daemon reload$G Successfull$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
-systemctl enable backend
+systemctl enable backend &>>$Log_file
 echo -e "Enabled backend$G Successfull$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
