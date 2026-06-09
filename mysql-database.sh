@@ -43,6 +43,18 @@ VALIDATE(){
     fi
 }
 
+
+VALIDATE2(){
+    if [ $? -ne 0 ]
+        then
+            echo "" | tee -a $Log_file
+            echo -e "$2 is$R Failed$N, check the error" | tee -a $Log_file
+            exit 1
+        else
+            echo "" | tee -a $Log_file
+            echo -e "$2 is$G Successfull$N" | tee -a $Log_file
+        fi
+}
 #The main script runs from here
 
 ROOT_ACCESS
@@ -57,11 +69,13 @@ VALIDATE $? mysql-server
 
 echo "" | tee -a $Log_file
 systemctl enable mysqld &>>$Log_file
-echo -e "Systemctl$Y Enable$N mysqld$G Successfull$N" | tee -a $Log_file
+VALIDATE2 $? Systemctl Enable mysqld
+
 
 echo "" | tee -a $Log_file
 systemctl restart mysqld &>>$Log_file
-echo -e "Systemctl$Y Restarted$N mysqld$G Successfull$N" | tee -a $Log_file
+VALIDATE2 $? Systemctl$Y Restarted$N mysqld
+
 
 echo "" | tee -a $Log_file
 mysql -h mysql.gangs.shop -u root -pExpenseApp@1 -e "show databases;" &>>$Log_file

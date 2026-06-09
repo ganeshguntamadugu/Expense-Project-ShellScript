@@ -51,6 +51,18 @@ VALIDATE(){
     fi
 }
 
+VALIDATE2(){
+    if [ $? -ne 0 ]
+        then
+            echo "" | tee -a $Log_file
+            echo -e "$2 is$R Failed$N, Please check the error" | tee -a $Log_file
+            exit 1
+        else
+            echo "" | tee -a $Log_file
+            echo -e "$2 is$G Successfull$N" | tee -a $Log_file
+        fi
+}
+
 #The main script runs from here
 
 ROOT_ACCESS
@@ -70,17 +82,14 @@ mkdir -p /app
 
 echo "" | tee -a $Log_file
 id expense &>>$Log_file
-if [ $? -ne 0 ]
-then
-    useradd expense
-    echo -e "Created a user$G 'Expense'$N" | tee -a $Log_file
-else
-    echo -e "User Expense is$Y Already$N Exists" | tee -a $Log_file
-fi
+VALIDATE2 $? Created a user 'Expense'
+
+
 
 echo "" | tee -a $Log_file
 curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz &>>$Log_file
-echo -e "Application is$G Downloaded$N" | tee -a $Log_file
+VALIDATE2 $? Application Downloaded
+
 
 cd /app
 tar -xzf /tmp/backend.tar.gz 
@@ -88,11 +97,13 @@ tar -xzf /tmp/backend.tar.gz
 echo "" | tee -a $Log_file
 cd /app
 npm install &>>$Log_file
-echo -e "Dependencies are$G Installed$N" | tee -a $Log_file
+VALIDATE2 $? Dependencies Installation
+
 
 echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/backend-config /etc/systemd/system/backend.service
-echo -e "Backend configurations are copied$G Successfully$N" | tee -a $Log_file
+VALIDATE2 $? Backend configurations copied
+
 
 echo "" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
@@ -104,28 +115,22 @@ else
     echo -e "MySQL is$Y Already$N installed" | tee -a $Log_file
 fi
 
+
 echo "" | tee -a $Log_file
 mysql -h mysql.gangs.shop -u root -pExpenseApp@1 < /app/schema/backend.sql &>>$Log_file
-if [ $? -ne 0 ]
-then
-    echo -e "Schema integration$R Failed$N, Please check the error" | tee -a $Log_file
-    exit 1
-else
-    echo -e "Schema integration$G Successfull$N" | tee -a $Log_file
-fi
-
+VALIDATE2 $? Schema integration
 
 echo "" | tee -a $Log_file
 systemctl daemon-reload
-echo -e "Daemon reload$G Successfull$N" | tee -a $Log_file
+VALIDATE2 $? Daemon reload
 
 echo "" | tee -a $Log_file
 systemctl enable backend &>>$Log_file
-echo -e "Enabled backend$G Successfull$N" | tee -a $Log_file
+VALIDATE2 $? Enabling backend
 
 echo "" | tee -a $Log_file
 systemctl restart backend
-echo -e "Restarted backend$G Successfull$N" | tee -a $Log_file
+VALIDATE2 $? Restart backend
 
 echo "" | tee -a $Log_file
 echo -e "Script$G Completed$N executing at $(date)" | tee -a $Log_file 
