@@ -67,7 +67,7 @@ echo -e "Restarted nginx$G Successfully$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 rm -rf /usr/share/nginx/html/*
-echo "Remove the default Nginx content" | tee -a $Log_file
+echo "Removed the default Nginx content" | tee -a $Log_file
 
 
 echo "" | tee -a $Log_file
