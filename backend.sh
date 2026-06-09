@@ -84,11 +84,14 @@ id expense &>>$Log_file
     then
         useradd expense
         if [ $? -ne 0 ]
+        then
             echo -e "Creating user Expense is$R Failed$N, Please check the error" | tee -a $Log_file
             exit 1
         else
             echo -e "Creating user Expense is$G Successfull$N" | tee -a $Log_file
         fi
+    else
+        echo -e "User Expense is$Y Already$N created" | tee -a $Log_file
     fi
 
 echo "" | tee -a $Log_file
