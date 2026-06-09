@@ -39,8 +39,15 @@ VALIDATE(){
 
         echo "" | tee -a $Log_file
         dnf install $2 -y &>>$Log_file
-        echo -e "$2 version 20 installed$G Successful$N" | tee -a $Log_file
-        
+        if [ $? -ne 0 ]
+        then
+            echo "" | tee -a $Log_file
+            echo -e "$2 is $R not$N installed, check the error" | tee -a $Log_file
+            exit 1
+        else
+            echo "" | tee -a $Log_file
+            echo -e "$2 version 20 installed$G Successful$N" | tee -a $Log_file
+        fi
     else
         echo -e "$2 is$Y Already$N installed, nothing to do" | tee -a $Log_file
     fi
