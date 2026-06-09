@@ -82,13 +82,13 @@ mkdir -p /app
 
 echo "" | tee -a $Log_file
 id expense &>>$Log_file
-VALIDATE2 $? Created a user 'Expense'
+VALIDATE2 $? "Created a user 'Expense'"
 
 
 
 echo "" | tee -a $Log_file
 curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz &>>$Log_file
-VALIDATE2 $? Application Downloaded
+VALIDATE2 $? 'Application Downloaded'
 
 
 cd /app
@@ -97,12 +97,12 @@ tar -xzf /tmp/backend.tar.gz
 echo "" | tee -a $Log_file
 cd /app
 npm install &>>$Log_file
-VALIDATE2 $? Dependencies Installation
+VALIDATE2 $? 'Dependencies Installation'
 
 
 echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/backend-config /etc/systemd/system/backend.service
-VALIDATE2 $? Backend configurations copied
+VALIDATE2 $? 'Backend configurations copied'
 
 
 echo "" | tee -a $Log_file
@@ -118,19 +118,19 @@ fi
 
 echo "" | tee -a $Log_file
 mysql -h mysql.gangs.shop -u root -pExpenseApp@1 < /app/schema/backend.sql &>>$Log_file
-VALIDATE2 $? Schema integration
+VALIDATE2 $? 'Schema integration'
 
 echo "" | tee -a $Log_file
 systemctl daemon-reload
-VALIDATE2 $? Daemon reload
+VALIDATE2 $? 'Daemon reload'
 
 echo "" | tee -a $Log_file
 systemctl enable backend &>>$Log_file
-VALIDATE2 $? Enabling backend
+VALIDATE2 $? 'Enabling backend'
 
 echo "" | tee -a $Log_file
 systemctl restart backend
-VALIDATE2 $? Restart backend
+VALIDATE2 $? 'Restart backend'
 
 echo "" | tee -a $Log_file
 echo -e "Script$G Completed$N executing at $(date)" | tee -a $Log_file 
