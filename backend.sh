@@ -41,7 +41,7 @@ VALIDATE(){
         if [ $? -ne 0 ]
         then
             echo "" | tee -a $Log_file
-            echo -e "$2 is $R not$N installed, check the error" | tee -a $Log_file
+            echo -e "$2 is$R not$N installed, check the error" | tee -a $Log_file
             exit 1
         else
             echo "" | tee -a $Log_file
