@@ -67,22 +67,22 @@ echo -e "Restarted nginx$G Successfully$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 rm -rf /usr/share/nginx/html/*
-echo "Removed the default Nginx content" | tee -a $Log_file
+echo -e "Removed the default Nginx content$G Successfully$N" | tee -a $Log_file
 
 
 echo "" | tee -a $Log_file
 curl -o /tmp/frontend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-frontend-v3.tar.gz &>>$Log_file
-echo "Downloaded the frontend package $G Successfully$N" | tee -a $Log_file
+echo -e "Downloaded the frontend package $G Successfully$N" | tee -a $Log_file
 
 
 echo "" | tee -a $Log_file
 cd /usr/share/nginx/html
 tar -xzf /tmp/frontend.tar.gz 
-echo "Extract files directly into the Nginx web root $G Successfully$N" | tee -a $Log_file
+echo -e "Extract files directly into the Nginx web root $G Successfully$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/frontend-config /etc/nginx/default.d/expense.conf
-echo "Frontend configurations are copied$G Successfully$N" | tee -a $Log_file
+echo -e "Frontend configurations are copied$G Successfully$N" | tee -a $Log_file
 
 
 echo "" | tee -a $Log_file
