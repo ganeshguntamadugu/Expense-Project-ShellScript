@@ -56,7 +56,7 @@ dnf list installed nginx &>>$Log_file
 VALIDATE $? nginx
 
 echo "" | tee -a $Log_file
-systemctl enable nginx
+systemctl enable nginx &>>$Log_file
 echo -e "Enabled nginx$G Successfully$N" | tee -a $Log_file
 
 
