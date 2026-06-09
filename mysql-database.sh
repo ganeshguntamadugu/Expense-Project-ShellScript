@@ -46,12 +46,12 @@ VALIDATE(){
 
 VALIDATE2(){
     if [ $? -ne 0 ]
-        then
-            echo -e "$2 is$R Failed$N, check the error" | tee -a $Log_file
-            exit 1
-        else
-            echo -e "$2 is$G Successfull$N" | tee -a $Log_file
-        fi
+    then
+        echo -e "$2 is$R Failed$N, check the error" | tee -a $Log_file
+        exit 1
+    else
+        echo -e "$2 is$G Successfull$N" | tee -a $Log_file
+    fi
 }
 #The main script runs from here
 

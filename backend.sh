@@ -53,12 +53,12 @@ VALIDATE(){
 
 VALIDATE2(){
     if [ $? -ne 0 ]
-        then
-            echo -e "$2 is$R Failed$N, Please check the error" | tee -a $Log_file
-            exit 1
-        else
-            echo -e "$2 is$G Successfull$N" | tee -a $Log_file
-        fi
+    then
+        echo -e "$2 is$R Failed$N, Please check the error" | tee -a $Log_file
+        exit 1
+    else
+        echo -e "$2 is$G Successfull$N" | tee -a $Log_file
+    fi
 }
 
 #The main script runs from here
@@ -80,9 +80,16 @@ mkdir -p /app
 
 echo "" | tee -a $Log_file
 id expense &>>$Log_file
-VALIDATE2 $? "Created a user 'Expense'"
-
-
+    if [ $? -ne 0 ]
+    then
+        useradd expense
+            if [ $? -ne 0 ]
+            echo -e "Creating user Expense is$R Failed$N, Please check the error" | tee -a $Log_file
+            exit 1
+        else
+            echo -e "Creating user Expense is$G Successfull$N" | tee -a $Log_file
+        fi
+    fi
 
 echo "" | tee -a $Log_file
 curl -o /tmp/backend.tar.gz https://raw.githubusercontent.com/daws-90s/expense-documentation/refs/heads/main/artifacts/expense-backend-v3.tar.gz &>>$Log_file
