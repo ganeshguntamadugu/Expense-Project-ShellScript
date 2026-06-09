@@ -67,12 +67,12 @@ VALIDATE $? mysql-server
 
 echo "" | tee -a $Log_file
 systemctl enable mysqld &>>$Log_file
-VALIDATE2 $? Systemctl Enable mysqld
+VALIDATE2 $? 'Systemctl Enable mysqld'
 
 
 echo "" | tee -a $Log_file
 systemctl restart mysqld &>>$Log_file
-VALIDATE2 $? Systemctl$Y Restarted$N mysqld
+VALIDATE2 $? 'Systemctl Restarted mysqld'
 
 
 echo "" | tee -a $Log_file
