@@ -35,7 +35,7 @@ VALIDATE(){
 
         echo "" | tee -a $Log_file
         dnf module enable $2:20 -y &>>$Log_file
-        echo -e "$2 version 20 is $Y Enabled$N" | tee -a $Log_file
+        echo -e "$2 version 20 is$Y Enabled$N" | tee -a $Log_file
 
         dnf install $2 -y &>>$Log_file
         if [ $? -ne 0 ]
