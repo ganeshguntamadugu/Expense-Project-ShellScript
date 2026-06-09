@@ -87,7 +87,7 @@ echo -e "Dependencies are$G Installed$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 cp /home/ec2-user/Expense-Project-ShellScript/backend-config /etc/systemd/system/backend.service
-echo -e "Backend configurations are$G Copied$N" | tee -a $Log_file
+echo -e "Backend configurations are copied$G Successfully$N" | tee -a $Log_file
 
 echo "" | tee -a $Log_file
 dnf list installed mysql &>>$Log_file
